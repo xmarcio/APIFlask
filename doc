@@ -1,0 +1,105 @@
+openapi: 3.0.0
+info:
+  title: API Flask
+  description: API Responsável por integrar cursos, formações e professores.
+  version: 1.0.0
+  contact:
+    name: Marcio Seefeld
+    url:  http://www.cloudopss.com.br
+    email: marcioseefeld@gmail.com
+servers:
+  - url: http://localhost:5000
+paths:
+  /login:
+    post:
+      tags:
+        - Auth
+      operationId: login
+      description: Realizar login do usuário com as credenciais.
+      requestBody: 
+        content:
+          'aplication/json':
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+              
+      responses: 
+         '200':
+           description: 'Login realizado com sucesso'
+           content:
+             'aplication/json':
+               schema:
+                 $ref: '#/components/schemas/TokenResponse'
+         '400':
+           description: 'Houveram erros de validação'
+           content:
+             'aplication/json':
+               schema:
+                 $ref: '#/components/schemas/ErrorResponse'
+         '401':
+            description: 'Credenciais inválidas'
+            content:
+              'aplication/json':
+                schema:
+                  $ref: '#/components/schemas/ErrorResponse'
+  /token/refresh:
+    post:
+      tags:
+        - Auth
+      operationId: refresh
+      description: Autenticar o usuário através do refresh token
+      requestBody:
+        content:
+          'aplication':
+            schema:
+             $ref: '#/components/schemas/RefreshRequest'
+      responses:
+         '200':
+           description: Autenticação realizada com sucesso
+           content:
+             'aplication':
+               schema:
+                 $ref: '#/components/schemas/TokenResponse'
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - senha
+      properties:
+         email:
+          type: string
+          format: email
+         senha: 
+          type: string
+          format: password
+    TokenResponse:
+      type: object
+      properties:
+       access_token:
+        type: string
+       refresh_token:
+         type: string
+    ErrorResponse:
+        type: object
+        properties:
+         error:
+          type: string
+    RefreshRequest:
+      type: object
+      required:
+        - refresh_token
+      properties:
+        refresh_token:
+          type: string
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: api-key
+        
+       
