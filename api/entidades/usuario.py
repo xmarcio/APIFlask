@@ -1,11 +1,10 @@
 class Usuario():
     def __init__(self, nome, email, senha, is_admin, api_key):
         self.__nome = nome
-        self.__email= email
-        self.__senha=senha
+        self.__email = email
+        self.__senha = senha
         self.__is_admin = is_admin
-        self.__api_key=api_key
-
+        self.__api_key = api_key
 
     @property
     def nome(self):

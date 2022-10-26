@@ -9,11 +9,12 @@ from ..models.curso_model import Curso
 from flask_jwt_extended import jwt_required, get_jwt
 from ..decorator import admin_required, api_key_required
 
+
 class CursoList(Resource):
     @api_key_required
     def get(self):
         cs = curso_schema.CursoSchema(many=True)
-        return paginate(Curso,cs)
+        return paginate(Curso, cs)
 
     @admin_required
     def post(self):
@@ -35,6 +36,7 @@ class CursoList(Resource):
             resultado = curso_service.cadastrar_curso(novo_curso)
             x = cs.jsonify(resultado)
             return make_response(x, 201)
+
 
 class CursoDetail(Resource):
 
@@ -77,6 +79,7 @@ class CursoDetail(Resource):
             return make_response(jsonify("Curso não encontrado"), 404)
         curso_service.remove_curso(curso_bd)
         return make_response('Curso excluído com sucesso', 204)
+
 
 api.add_resource(CursoList, '/cursos')
 api.add_resource(CursoDetail, '/cursos/<int:id>')

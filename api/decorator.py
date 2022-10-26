@@ -3,6 +3,7 @@ from flask_jwt_extended import get_jwt, verify_jwt_in_request
 from flask import make_response, jsonify, request
 from .services.usuario_service import listar_usuario_api_key
 
+
 def admin_required(fn):
     @wraps(fn)
     def wrapper(*args, **kwargs):
@@ -12,7 +13,9 @@ def admin_required(fn):
             return make_response(jsonify(mensagem='Não é permitido esse recurso. Apenas administradores'), 403)
         else:
             return fn(*args, **kwargs)
+
     return wrapper
+
 
 def api_key_required(fn):
     @wraps(fn)
@@ -22,4 +25,5 @@ def api_key_required(fn):
             return fn(*args, **kwargs)
         else:
             return make_response(jsonify(mensagem='Não é permitido esse recurso. Apenas api_tokens válidos'), 401)
+
     return wrapper
