@@ -18,7 +18,7 @@ paths:
       description: Realizar login do usuário com as credenciais.
       requestBody: 
         content:
-          'aplication/json':
+          'application/json':
             schema:
               $ref: '#/components/schemas/LoginRequest'
               
@@ -26,19 +26,19 @@ paths:
          '200':
            description: 'Login realizado com sucesso'
            content:
-             'aplication/json':
+             'application/json':
                schema:
                  $ref: '#/components/schemas/TokenResponse'
          '400':
            description: 'Houveram erros de validação'
            content:
-             'aplication/json':
+             'application/json':
                schema:
                  $ref: '#/components/schemas/ErrorResponse'
          '401':
             description: 'Credenciais inválidas'
             content:
-              'aplication/json':
+              'application/json':
                 schema:
                   $ref: '#/components/schemas/ErrorResponse'
   /token/refresh:
@@ -64,10 +64,12 @@ paths:
       tags:
         - Cursos
       operationId: cadastrarCurso
-      description: Cadastrar Curso
+      description: Cadastrar Curso 
+      security: 
+        - JWT: []
       requestBody:
         content:
-          'aplication/json':
+          'application/json':
             schema:
               $ref: '#/components/schemas/CursoRequest'
               
@@ -75,10 +77,28 @@ paths:
         '201':
           description: 'Curso cadastrado com sucesso'
           content:
-            'aplication/json':
+            'application/json':
               schema:
                 $ref: '#/components/schemas/CursoResponse'
-    
+        '400':
+          description: 'Houve erros de validação'
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: 'Usuário não autorizado, somente administradores'
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'                
+        '404':
+          description: 'Formação não encontrada'
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+                
 
 components:
   schemas:
@@ -145,6 +165,19 @@ components:
           type: string
           format: date
         formacao:
+          type: string
+        links:
+          type: array
+          items:
+            $ref: '#/components/schemas/LinkResponse'
+    LinkResponse:
+      type: object
+      properties:
+        get:
+          type: string
+        put:
+          type: string
+        delete:
           type: string
         
   securitySchemes:
