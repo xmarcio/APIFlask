@@ -59,6 +59,26 @@ paths:
              'aplication':
                schema:
                  $ref: '#/components/schemas/TokenResponse'
+  /cursos:
+    post:
+      tags:
+        - Cursos
+      operationId: cadastrarCurso
+      description: Cadastrar Curso
+      requestBody:
+        content:
+          'aplication/json':
+            schema:
+              $ref: '#/components/schemas/CursoRequest'
+              
+      responses:
+        '201':
+          description: 'Curso cadastrado com sucesso'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/CursoResponse'
+    
 
 components:
   schemas:
@@ -93,6 +113,40 @@ components:
       properties:
         refresh_token:
           type: string
+    CursoRequest:
+      type: object
+      required:
+        - nome
+        - descricao
+        - data_publicacao
+        - formacao
+      properties:
+        nome:
+          type: string
+          maxLength: 50
+        descricao:
+          type: string
+          maxLength: 100
+        data_publicacao:
+          type: string
+          format: date
+        formacao:
+          type: string
+    CursoResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        descricao: 
+          type: string
+        data_publicaco:
+          type: string
+          format: date
+        formacao:
+          type: string
+        
   securitySchemes:
     JWT:
       type: http
