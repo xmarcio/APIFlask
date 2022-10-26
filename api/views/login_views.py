@@ -11,7 +11,7 @@ class LoginList(Resource):
 
     @jwt.additional_claims_loader
     def add_claims_to_access_toke(identity):
-        usuario_token = usuario_service.lista_usuario_id(identity)
+        usuario_token = usuario_service.listar_usuario_id(identity)
         if usuario_token.is_admin:
             roles = 'admin'
         else:
