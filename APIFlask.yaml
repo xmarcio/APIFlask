@@ -1,0 +1,717 @@
+_type: export
+__export_format: 4
+__export_date: 2022-10-27T20:43:39.061Z
+__export_source: insomnia.desktop.app:v2022.6.0
+resources:
+  - _id: req_wrk_e3c2999182bc48cd8867cc30daeb60732736fab2
+    parentId: wrk_e3c2999182bc48cd8867cc30daeb6073
+    modified: 1666731463970
+    created: 1666731463970
+    url: "{{ base_url }}/login"
+    name: /login
+    description: ""
+    method: POST
+    body:
+      mimeType: aplication/json
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1666731463970
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_e3c2999182bc48cd8867cc30daeb6073
+    parentId: null
+    modified: 1666726508572
+    created: 1666726508572
+    name: teste.yaml
+    description: ""
+    scope: design
+    _type: workspace
+  - _id: env_0c16c829d898dc613ab51ad519be960e5e2462d5
+    parentId: wrk_e3c2999182bc48cd8867cc30daeb6073
+    modified: 1666726508579
+    created: 1666726508579
+    name: Base Environment
+    data:
+      base_url: "{{ scheme }}://{{ host }}{{ base_path }}"
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1666726508579
+    _type: environment
+  - _id: jar_0c16c829d898dc613ab51ad519be960e5e2462d5
+    parentId: wrk_e3c2999182bc48cd8867cc30daeb6073
+    modified: 1666726508582
+    created: 1666726508582
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_8176554507ce47c79ea43d96edac61fd
+    parentId: wrk_e3c2999182bc48cd8867cc30daeb6073
+    modified: 1666881694015
+    created: 1666726508573
+    fileName: APIFlask.yaml
+    contents: "openapi: 3.0.0
+
+      info:
+
+      \  title: API Flask
+
+      \  description: API Responsável por integrar cursos, formações e
+      professores.
+
+      \  version: 1.0.0
+
+      \  contact:
+
+      \    name: Marcio Seefeld
+
+      \    url:  http://www.cloudopss.com.br
+
+      \    email: marcioseefeld@gmail.com
+
+      servers:
+
+      \  - url: http://localhost:5000
+
+      paths:
+
+      \  /login:
+
+      \    post:
+
+      \      tags:
+
+      \        - Auth
+
+      \      operationId: login
+
+      \      description: Realizar login do usuário com as credenciais.
+
+      \      requestBody:\ 
+
+      \        content:
+
+      \          'application/json':
+
+      \            schema:
+
+      \              $ref: '#/components/schemas/LoginRequest'
+
+      \             \ 
+
+      \      responses:\ 
+
+      \         '200':
+
+      \           description: 'Login realizado com sucesso'
+
+      \           content:
+
+      \             'application/json':
+
+      \               schema:
+
+      \                 $ref: '#/components/schemas/TokenResponse'
+
+      \         '400':
+
+      \           description: 'Houveram erros de validação'
+
+      \           content:
+
+      \             'application/json':
+
+      \               schema:
+
+      \                 $ref: '#/components/schemas/ErrorResponse'
+
+      \         '401':
+
+      \            description: 'Credenciais inválidas'
+
+      \            content:
+
+      \              'application/json':
+
+      \                schema:
+
+      \                  $ref: '#/components/schemas/ErrorResponse'
+
+      \  /token/refresh:
+
+      \    post:
+
+      \      tags:
+
+      \        - Auth
+
+      \      operationId: refresh
+
+      \      description: Autenticar o usuário através do refresh token
+
+      \      requestBody:
+
+      \        content:
+
+      \          'aplication':
+
+      \            schema:
+
+      \             $ref: '#/components/schemas/RefreshRequest'
+
+      \      responses:
+
+      \         '200':
+
+      \           description: Autenticação realizada com sucesso
+
+      \           content:
+
+      \             'aplication':
+
+      \               schema:
+
+      \                 $ref: '#/components/schemas/TokenResponse'
+
+      \  /cursos:
+
+      \    post:
+
+      \      tags:
+
+      \        - Cursos
+
+      \      operationId: cadastrarCurso
+
+      \      description: Cadastrar Curso\ 
+
+      \      security:\ 
+
+      \        - JWT: []
+
+      \      requestBody:
+
+      \        content:
+
+      \          'application/json':
+
+      \            schema:
+
+      \              $ref: '#/components/schemas/CursoRequest'
+
+      \             \ 
+
+      \      responses:
+
+      \        '201':
+
+      \          description: 'Curso cadastrado com sucesso'
+
+      \          content:
+
+      \            'application/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/CursoResponse'
+
+      \        '400':
+
+      \          description: 'Houve erros de validação'
+
+      \          content:
+
+      \            'application/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/ErrorResponse'
+
+      \        '403':
+
+      \          description: 'Usuário não autorizado, somente
+      administradores'
+
+      \          content:
+
+      \            'application/json':
+
+      \              schema:
+
+      \                $ref:
+      '#/components/schemas/ErrorResponse'               \ 
+
+      \        '404':
+
+      \          description: 'Formação não encontrada'
+
+      \          content:
+
+      \            'application/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/ErrorResponse'
+
+      \    get:\ 
+
+      \      tags:
+
+      \        - Cursos
+
+      \      description: 'Listar todos os cursos'
+
+      \      security:
+
+      \        - JWT: []
+
+      \      responses:
+
+      \        '200':
+
+      \          description: 'Listagem de cursos realizada com sucesso'
+
+      \          content:
+
+      \            'aplication/jason':
+
+      \              schema:
+
+      \                type: array
+
+      \                items:
+
+      \                  $ref: '#/components/schemas/CursoResponse'
+
+      \        '401':
+
+      \          description: 'Usuario não esta autorizado'
+
+      \          content:
+
+      \            'aplication/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/ErrorResponse'
+
+      \  /cursos/{cursoid}:
+
+      \    get:
+
+      \      tags:
+
+      \        - Cursos
+
+      \      operationId: detalharCurso
+
+      \      description: 'Detalhar curso por id'
+
+      \      parameters:\ 
+
+      \        - name: cursoid
+
+      \          in: path
+
+      \          description: id do curso a ser detalhado
+
+      \          required: true
+
+      \          schema:
+
+      \            type: integer
+
+      \      security:
+
+      \        - JWT: []
+
+      \      responses:
+
+      \        '200':
+
+      \          description: 'Curso detalhado com sucesso'
+
+      \          content:
+
+      \            'aplication/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/CursoResponse'
+
+      \        '401':
+
+      \          description: 'Usuário não autenticado'
+
+      \          content:
+
+      \            'aplication/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/ErrorResponse'
+
+      \        '404':
+
+      \          description: 'Curso não foi encontrado'
+
+      \          content:
+
+      \            'aplication/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/ErrorResponse'       \ 
+
+      \    put:
+
+      \      tags:
+
+      \        - Cursos
+
+      \      description: 'Atualizar Cursos'
+
+      \      operationId: atualizarCurso
+
+      \      parameters:\ 
+
+      \        - name: cursoid
+
+      \          in: path
+
+      \          description: id do curso a ser atualizado
+
+      \          required: true
+
+      \          schema:
+
+      \            type: integer
+
+      \      security:\ 
+
+      \        - JWT: []
+
+      \      requestBody:
+
+      \        content:
+
+      \          'aplication/json':
+
+      \            schema:
+
+      \              $ref: '#/components/schemas/CursoRequest'
+
+      \      responses:
+
+      \        '200':
+
+      \          description: 'Curso atualizado com sucesso'
+
+      \          content:
+
+      \            'aplication/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/CursoResponse'
+
+      \        '400':
+
+      \          description: 'Ouve erros na validação dos dados'
+
+      \          content:
+
+      \            'aplication/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/ErrorResponse'      \ 
+
+      \        '401':
+
+      \          description: 'Usuário não autenticado'
+
+      \          content:
+
+      \            'aplication/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/ErrorResponse'
+
+      \        '404':
+
+      \          description: 'Curso não foi encontrado'
+
+      \          content:
+
+      \            'aplication/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/ErrorResponse'       \ 
+
+      \    delete:
+
+      \      tags:
+
+      \        - Cursos
+
+      \      description: 'Excluir Curso'
+
+      \      operationId: excluirCurso
+
+      \      parameters:\ 
+
+      \        - name: cursoid
+
+      \          in: path
+
+      \          description: id do curso a ser removido
+
+      \          required: true
+
+      \          schema:
+
+      \            type: integer
+
+      \      security:
+
+      \        - JWT: []
+
+      \      responses: \ 
+
+      \        '204':
+
+      \          description: 'Curso excluído com sucesso'
+
+      \        '401':
+
+      \          description: 'Usuário não autenticado'
+
+      \          content:
+
+      \            'aplication/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/ErrorResponse'
+
+      \        '404':
+
+      \          description: 'Curso não foi encontrado'
+
+      \          content:
+
+      \            'aplication/json':
+
+      \              schema:
+
+      \                $ref: '#/components/schemas/ErrorResponse'
+
+      \ \ 
+
+      \ \ 
+
+      components:
+
+      \  schemas:
+
+      \    LoginRequest:
+
+      \      type: object
+
+      \      required:
+
+      \        - email
+
+      \        - senha
+
+      \      properties:
+
+      \         email:
+
+      \          type: string
+
+      \          format: email
+
+      \         senha:\ 
+
+      \          type: string
+
+      \          format: password
+
+      \    TokenResponse:
+
+      \      type: object
+
+      \      properties:
+
+      \       access_token:
+
+      \        type: string
+
+      \       refresh_token:
+
+      \         type: string
+
+      \    ErrorResponse:
+
+      \        type: object
+
+      \        properties:
+
+      \         error:
+
+      \          type: string
+
+      \    RefreshRequest:
+
+      \      type: object
+
+      \      required:
+
+      \        - refresh_token
+
+      \      properties:
+
+      \        refresh_token:
+
+      \          type: string
+
+      \    CursoRequest:
+
+      \      type: object
+
+      \      required:
+
+      \        - nome
+
+      \        - descricao
+
+      \        - data_publicacao
+
+      \        - formacao
+
+      \      properties:
+
+      \        nome:
+
+      \          type: string
+
+      \          maxLength: 50
+
+      \        descricao:
+
+      \          type: string
+
+      \          maxLength: 100
+
+      \        data_publicacao:
+
+      \          type: string
+
+      \          format: date
+
+      \        formacao:
+
+      \          type: string
+
+      \    CursoResponse:
+
+      \      type: object
+
+      \      properties:
+
+      \        id:
+
+      \          type: integer
+
+      \        nome:
+
+      \          type: string
+
+      \        descricao:\ 
+
+      \          type: string
+
+      \        data_publicaco:
+
+      \          type: string
+
+      \          format: date
+
+      \        formacao:
+
+      \          type: string
+
+      \        links:
+
+      \          type: array
+
+      \          items:
+
+      \            $ref: '#/components/schemas/LinkResponse'
+
+      \    LinkResponse:
+
+      \      type: object
+
+      \      properties:
+
+      \        get:
+
+      \          type: string
+
+      \        put:
+
+      \          type: string
+
+      \        delete:
+
+      \          type: string
+
+      \       \ 
+
+      \  securitySchemes:
+
+      \    JWT:
+
+      \      type: http
+
+      \      scheme: bearer
+
+      \    ApiKeyAuth:
+
+      \      type: apiKey
+
+      \      in: header
+
+      \      name: api-key
+
+      \       \ 
+
+      \       "
+    contentType: yaml
+    _type: api_spec
+  - _id: env_env_0c16c829d898dc613ab51ad519be960e5e2462d5_sub
+    parentId: env_0c16c829d898dc613ab51ad519be960e5e2462d5
+    modified: 1666731463976
+    created: 1666731463976
+    name: OpenAPI env
+    data:
+      scheme: http
+      base_path: ""
+      host: localhost:5000
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1666731463976
+    _type: environment
