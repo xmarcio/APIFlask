@@ -98,8 +98,136 @@ paths:
             'application/json':
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-                
-
+    get: 
+      tags:
+        - Cursos
+      description: 'Listar todos os cursos'
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: 'Listagem de cursos realizada com sucesso'
+          content:
+            'aplication/jason':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CursoResponse'
+        '401':
+          description: 'Usuario não esta autorizado'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /cursos/{cursoid}:
+    get:
+      tags:
+        - Cursos
+      operationId: detalharCurso
+      description: 'Detalhar curso por id'
+      parameters: 
+        - name: cursoid
+          in: path
+          description: id do curso a ser detalhado
+          required: true
+          schema:
+            type: integer
+      security:
+        - JWT: []
+      responses:
+        '200':
+          description: 'Curso detalhado com sucesso'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/CursoResponse'
+        '401':
+          description: 'Usuário não autenticado'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 'Curso não foi encontrado'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'        
+    put:
+      tags:
+        - Cursos
+      description: 'Atualizar Cursos'
+      operationId: atualizarCurso
+      parameters: 
+        - name: cursoid
+          in: path
+          description: id do curso a ser atualizado
+          required: true
+          schema:
+            type: integer
+      security: 
+        - JWT: []
+      requestBody:
+        content:
+          'aplication/json':
+            schema:
+              $ref: '#/components/schemas/CursoRequest'
+      responses:
+        '200':
+          description: 'Curso atualizado com sucesso'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/CursoResponse'
+        '400':
+          description: 'Ouve erros na validação dos dados'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'       
+        '401':
+          description: 'Usuário não autenticado'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 'Curso não foi encontrado'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'        
+    delete:
+      tags:
+        - Cursos
+      description: 'Excluir Curso'
+      operationId: excluirCurso
+      parameters: 
+        - name: cursoid
+          in: path
+          description: id do curso a ser removido
+          required: true
+          schema:
+            type: integer
+      security:
+        - JWT: []
+      responses:  
+        '204':
+          description: 'Curso excluído com sucesso'
+        '401':
+          description: 'Usuário não autenticado'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 'Curso não foi encontrado'
+          content:
+            'aplication/json':
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  
+  
 components:
   schemas:
     LoginRequest:
