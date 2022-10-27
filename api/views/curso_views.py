@@ -20,19 +20,24 @@ class CursoList(Resource):
     def post(self):
         cs = curso_schema.CursoSchema()
         validate = cs.validate(request.json)
+        request_data = request.get_json()
         if validate:
             return make_response(jsonify(validate), 400)
         else:
             nome = request.json["nome"]
             descricao = request.json["descricao"]
             data_publicacao = request.json["data_publicacao"]
-            formacao = request.json["formacao"]
-            formacao_curso = formacao_service.listar_formacao_id(formacao)
-            if formacao_curso is None:
-                return make_response(jsonify("Formação não foi encontrada"), 404)
-            novo_curso = curso.Curso(nome=nome, descricao=descricao,
-                                     data_publicacao=data_publicacao,
-                                     formacao=formacao_curso)
+            if 'formacao' in request_data:
+                formacao = request.json["formacao"]
+                formacao_curso = formacao_service.listar_formacao_id(formacao)
+                if formacao_curso is None:
+                    return make_response(jsonify("Formação não foi encontrada"), 404)
+                novo_curso = curso.Curso(nome=nome, descricao=descricao,
+                                         data_publicacao=data_publicacao,
+                                         formacao=formacao_curso)
+            else:
+                novo_curso = curso.Curso(nome=nome, descricao=descricao,
+                                         data_publicacao=data_publicacao)
             resultado = curso_service.cadastrar_curso(novo_curso)
             x = cs.jsonify(resultado)
             return make_response(x, 201)

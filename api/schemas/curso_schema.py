@@ -12,7 +12,7 @@ class CursoSchema(ma.SQLAlchemyAutoSchema):
     nome = fields.String(required=True)
     descricao = fields.String(required=True)
     data_publicacao = fields.Date(required=True)
-    formacao = fields.String(required=True)
+    formacao = fields.String(required=False)
 
     _links = ma.Hyperlinks(
         {
