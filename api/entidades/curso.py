@@ -29,10 +29,10 @@ class Curso():
     def data_publicacao(self, data_publicacao):
         self.__data_publicacao = data_publicacao
 
-    @property
-    def formacao(self):
-        return self.__formacao
+    #@property
+    #def formacao(self):
+     #   return self.__formacao
 
-    @formacao.setter
-    def formacao(self, formacao):
-        self.__formacao = formacao
+    #@formacao.setter
+    #def formacao(self, formacao):
+     #   self.__formacao = formacao
