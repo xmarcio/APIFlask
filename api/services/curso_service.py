@@ -3,12 +3,12 @@ from api import db
 
 
 def cadastrar_curso(curso):
-    if curso.formacao != and curso.formacao != None:
-        curso_bd = curso_model.Curso(nome=curso.nome, descricao=curso.descricao,
-                                 data_publicacao=curso.data_publicacao,
-                                 formacao=curso.formacao)
-    else:
-        curso_bd = curso_model.Curso(nome=curso.nome, descricao=curso.descricao,
+   #if curso.formacao != and curso.formacao != None:
+        #curso_bd = curso_model.Curso(nome=curso.nome, descricao=curso.descricao,
+                                 #data_publicacao=curso.data_publicacao,
+                                 #formacao=curso.formacao)
+    #else:
+    curso_bd = curso_model.Curso(nome=curso.nome, descricao=curso.descricao,
                                  data_publicacao=curso.data_publicacao)
 
     db.session.add(curso_bd)
